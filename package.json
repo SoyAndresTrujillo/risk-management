@@ -2,6 +2,38 @@
   "name": "risk-management",
   "version": "2.0.0",
   "description": "Template for the Learning Journey Building side-by-side extensions on SAP BTP",
+  "main": "index.js",
+  "scripts": {
+    "start": "cds run",
+    "watch-risk": "cds watch --open risk/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-regenerator": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "bake-cli": "^0.1.6",
+    "eslint": "^2.10.2",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-promise": "^1.1.0",
+    "eslint-plugin-standard": "^1.3.2",
+    "mocha": "^2.5.2",
+    "standard-version": "^2.2.1",
+    "watchd": "github:mklabs/watchd",
+    "@sap/ux-specification": "^1.108.5",
+    "sqlite3": "^5.0.4"
+  },
+  "bake": {
+    "description": "Scaffold a basic ES6 setup",
+    "scripts": {
+      "start": "echo Starting generation of default template",
+      "prestart": "echo prestart",
+      "poststart": "echo poststart",
+      "install": "npm install --loglevel warn --cache-min Infinity",
+      "preinstall": "echo Installing dependencies ...",
+      "postinstall": "npm ls --depth 0"
+    }
+  },
   "author": "m.haug@sap.com",
   "license": "SAP SAMPLE CODE LICENSE",
   "repository": "https://github.com/SAP-samples/sap-learning-extension-suite",
@@ -12,13 +44,11 @@
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^2.5.0",
     "@sap/cds": "^6",
-    "express": "^4"
-  },
-  "devDependencies": {
-    "sqlite3": "^5.0.4"
-  },
-  "scripts": {
-    "start": "cds run"
+    "@sap/xssec": "^3",
+    "express": "^4",
+    "hdb": "^0.19.0",
+    "make": "^0.0.0",
+    "passport": "^0"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -48,9 +78,20 @@
   "cds": {
     "requires": {
       "API_BUSINESS_PARTNER": {
-        "kind": "odata-v2",
-        "model": "srv\\external\\API_BUSINESS_PARTNER"
-      }
+        "kind": "odata",
+        "model": "srv/external/API_BUSINESS_PARTNER",
+        "credentials": {
+          "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_BUSINESS_PARTNER/"
+        }
+      },
+      "[production]": {
+        "db": "hana-cloud",
+        "auth": "xsuaa"
+      },
+      "db": "sql"
     }
-  }
+  },
+  "sapux": [
+    "app/risk"
+  ]
 }
