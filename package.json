@@ -47,7 +47,7 @@
     "@sap/xssec": "^3",
     "express": "^4",
     "hdb": "^0.19.0",
-    "make": "^0.0.0",
+    "make": "^0.8.1",
     "passport": "^0"
   },
   "eslintConfig": {
